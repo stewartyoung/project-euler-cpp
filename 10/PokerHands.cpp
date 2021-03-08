@@ -6,18 +6,16 @@ using namespace std;
 
 struct Player
 {
-    int playerWins;
-    vector<string> playerHands;
-    map<char, int> cardValueCounts;
-    map<char, int> cardSuitsCounts;
+    int player_wins;
+    vector<string> player_hands;
+    map<char, int> card_value_counts;
+    map<char, int> card_suits_counts;
 } Alice, Bob;
 
-int main()
+void populate_hands(string input_game, Player &player1, Player &player2)
 {
-    ifstream infile("poker.txt");
+    ifstream infile(input_game);
     vector<string> lines;
-    vector<string> player1;
-    vector<string> player2;
 
     // populate lines vector
     for (string line; getline(infile, line);)
@@ -30,9 +28,14 @@ int main()
     {
         cout << *i << '\n';
         string line = *i;
-        player1.push_back(line.substr(0, 14));
-        player2.push_back(line.substr(15));
+        player1.player_hands.push_back(line.substr(0, 14));
+        player2.player_hands.push_back(line.substr(15));
     }
+}
+
+int main()
+{
+    populate_hands(string("poker.txt"), Alice, Bob);
 
     // "parse" the hand
     // std::map of cards to worth e.g. {'2':2, ..., 'A': 14}
