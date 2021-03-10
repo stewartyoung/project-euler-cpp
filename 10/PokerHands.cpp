@@ -39,6 +39,7 @@ void count_value(Player &player)
     // for hand in total hand history
     for (vector<string>::const_iterator i = player.player_hands.begin(); i != player.player_hands.end(); ++i)
     {
+        cout << *i << "\n";
         player.card_value_counts["2"] = 0;
         player.card_value_counts["3"] = 0;
         player.card_value_counts["4"] = 0;
@@ -58,24 +59,51 @@ void count_value(Player &player)
         player.card_value_counts[string(1, i[0][6])]++;
         player.card_value_counts[string(1, i[0][9])]++;
         player.card_value_counts[string(1, i[0][12])]++;
+        for (auto &it : player.card_value_counts)
+        {
+            cout << it.first << ":" << it.second << " ";
+        }
+        cout << endl;
+    }
+}
+
+void count_suits(Player &player)
+{
+    // for hand in total hand history
+    for (vector<string>::const_iterator i = player.player_hands.begin(); i != player.player_hands.end(); ++i)
+    {
+        cout << *i << "\n";
+        player.card_suits_counts["C"] = 0;
+        player.card_suits_counts["D"] = 0;
+        player.card_suits_counts["H"] = 0;
+        player.card_suits_counts["S"] = 0;
+        // suits are the 1st, 4th, 7th, 10th, 13th characters on the line
+        player.card_suits_counts[string(1, i[0][1])]++;
+        player.card_suits_counts[string(1, i[0][4])]++;
+        player.card_suits_counts[string(1, i[0][7])]++;
+        player.card_suits_counts[string(1, i[0][10])]++;
+        player.card_suits_counts[string(1, i[0][13])]++;
+        for (auto &it : player.card_suits_counts)
+        {
+            cout << it.first << ":" << it.second;
+        }
+        cout << endl;
     }
 }
 
 int main()
 {
+    // read in the hands
     populate_hands(string("poker.txt"), Alice, Bob);
-    for (vector<string>::const_iterator i = Alice.player_hands.begin(); i != Alice.player_hands.end(); ++i)
-    {
-        cout << *i << "\n";
-    }
 
     // "parse" the hand
     // std::map of cards to worth e.g. {"2":2, ..., "A": 14}
-
     // std::map of card values to count in players hand
     count_value(Alice);
+    count_value(Bob);
     // std::map of suits to their counts
-
+    count_suits(Alice);
+    count_suits(Bob);
     // calculate "value" of the hand
 
     // declare winner
